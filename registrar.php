@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $carnet = trim($_POST['carnet'] ?? '');
     $serial = trim($_POST['serial'] ?? '');
     $tipo = $_POST['tipo'] ?? 'entrada';
-    
+
     if (empty($carnet) || empty($serial)) {
         $mensaje = '⚠️ Debe escanear el carnet y el serial del portátil.';
         $tipo_mensaje = 'error';
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $pdo->prepare("SELECT * FROM usuario WHERE carnet = ?");
             $stmt->execute([$carnet]);
             $usuario = $stmt->fetch();
-            
+
             if (!$usuario) {
                 $mensaje = '❌ Carnet no registrado.';
                 $tipo_mensaje = 'error';
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ");
                 $stmt->execute([$serial]);
                 $portatil = $stmt->fetch();
-                
+
                 if (!$portatil) {
                     $mensaje = '❌ Portátil no registrado.';
                     $tipo_mensaje = 'error';
@@ -64,59 +64,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Registrar - SENA</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="dashboard-container">
         <div class="header">
             <h1>📋 Registrar Entrada/Salida</h1>
             <div class="user-info">
                 <span>👤 <?= htmlspecialchars($_SESSION['nombre_completo']) ?></span>
-                <a href="logout.php" class="btn-logout">Cerrar sesión</a>
+                <span>🪪 <?= htmlspecialchars($_SESSION['carnet']) ?></span>
+                <span class="badge"><?= htmlspecialchars($_SESSION['rol']) ?></span>
+                <a href="../logout.php" class="btn-logout">Cerrar sesión</a>
             </div>
         </div>
 
         <?php include 'includes/menu.php'; ?>
-            <?php if ($_SESSION['rol'] == 'admin' || $_SESSION['rol'] == 'administrador'): ?>
-            <?php endif; ?>
-        </div>
-
-        <?php if ($mensaje): ?>
-            <div class="alert <?= $tipo_mensaje === 'success' ? 'alert-success' : 'alert-error' ?>">
-                <?= htmlspecialchars($mensaje) ?>
-            </div>
+        <?php if ($_SESSION['rol'] == 'admin' || $_SESSION['rol'] == 'administrador'): ?>
         <?php endif; ?>
+    </div>
 
-        <div class="card">
-            <h3>🔐 Registro de Entrada / Salida</h3>
-            <p>Escanea el carnet y el serial del portátil.</p>
+    <?php if ($mensaje): ?>
+        <div class="alert <?= $tipo_mensaje === 'success' ? 'alert-success' : 'alert-error' ?>">
+            <?= htmlspecialchars($mensaje) ?>
         </div>
+    <?php endif; ?>
 
-        <form method="POST">
-            <div class="form-row">
-                <div class="form-group">
-                    <label>🪪 Carnet</label>
-                    <input type="text" name="carnet" placeholder="Ej: SENA123" required autofocus>
-                </div>
-                <div class="form-group">
-                    <label>💻 Serial</label>
-                    <input type="text" name="serial" placeholder="Ej: PC-001" required>
-                </div>
-                <div class="form-group">
-                    <label>🔄 Tipo</label>
-                    <select name="tipo" required>
-                        <option value="entrada">Entrada</option>
-                        <option value="salida">Salida</option>
-                    </select>
-                </div>
-                <div class="form-group" style="flex: 0 0 auto;">
-                    <button type="submit" class="btn-success">Registrar</button>
-                </div>
+    <div class="card">
+        <h3>🔐 Registro de Entrada / Salida</h3>
+        <p>Escanea el carnet y el serial del portátil.</p>
+    </div>
+
+    <form method="POST">
+        <div class="form-row">
+            <div class="form-group">
+                <label>🪪 Carnet</label>
+                <input type="text" name="carnet" placeholder="Ej: SENA123" required autofocus>
             </div>
-        </form>
+            <div class="form-group">
+                <label>💻 Serial</label>
+                <input type="text" name="serial" placeholder="Ej: PC-001" required>
+            </div>
+            <div class="form-group">
+                <label>🔄 Tipo</label>
+                <select name="tipo" required>
+                    <option value="entrada">Entrada</option>
+                    <option value="salida">Salida</option>
+                </select>
+            </div>
+            <div class="form-group" style="flex: 0 0 auto;">
+                <button type="submit" class="btn-success">Registrar</button>
+            </div>
+        </div>
+    </form>
     </div>
 </body>
+
 </html>

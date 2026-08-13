@@ -18,54 +18,59 @@ $registros = $pdo->query("
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title>Historial - SENA</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="dashboard-container">
         <div class="header">
             <h1>📋 Historial</h1>
             <div class="user-info">
                 <span>👤 <?= htmlspecialchars($_SESSION['nombre_completo']) ?></span>
-                <a href="logout.php" class="btn-logout">Cerrar sesión</a>
+                <span>🪪 <?= htmlspecialchars($_SESSION['carnet']) ?></span>
+                <span class="badge"><?= htmlspecialchars($_SESSION['rol']) ?></span>
+                <a href="../logout.php" class="btn-logout">Cerrar sesión</a>
             </div>
         </div>
 
         <?php include 'includes/menu.php'; ?>
-            <?php if ($_SESSION['rol'] == 'admin' || $_SESSION['rol'] == 'administrador'): ?>
-            <?php endif; ?>
-        </div>
-
-        <?php if (count($registros) > 0): ?>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Fecha/Hora</th>
-                        <th>Usuario</th>
-                        <th>Carnet</th>
-                        <th>Rol</th>
-                        <th>Tipo</th>
-                        <th>Portátil</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($registros as $r): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($r['fecha_hora']) ?></td>
-                            <td><?= htmlspecialchars($r['nombre_completo']) ?></td>
-                            <td><?= htmlspecialchars($r['carnet']) ?></td>
-                            <td><span class="badge-<?= $r['rol'] ?>"><?= htmlspecialchars($r['rol']) ?></span></td>
-                            <td><span class="<?= $r['tipo'] === 'entrada' ? 'badge-entrada' : 'badge-salida' ?>"><?= ucfirst($r['tipo']) ?></span></td>
-                            <td><?= htmlspecialchars($r['serial']) ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php else: ?>
-            <div class="alert alert-info">No hay registros aún.</div>
+        <?php if ($_SESSION['rol'] == 'admin' || $_SESSION['rol'] == 'administrador'): ?>
         <?php endif; ?>
     </div>
+
+    <?php if (count($registros) > 0): ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha/Hora</th>
+                    <th>Usuario</th>
+                    <th>Carnet</th>
+                    <th>Rol</th>
+                    <th>Tipo</th>
+                    <th>Portátil</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($registros as $r): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($r['fecha_hora']) ?></td>
+                        <td><?= htmlspecialchars($r['nombre_completo']) ?></td>
+                        <td><?= htmlspecialchars($r['carnet']) ?></td>
+                        <td><span class="badge-<?= $r['rol'] ?>"><?= htmlspecialchars($r['rol']) ?></span></td>
+                        <td><span class="<?= $r['tipo'] === 'entrada' ? 'badge-entrada' : 'badge-salida' ?>"><?= ucfirst($r['tipo']) ?></span></td>
+                        <td><?= htmlspecialchars($r['serial']) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <div class="alert alert-info">No hay registros aún.</div>
+    <?php endif; ?>
+    </div>
 </body>
+
 </html>
