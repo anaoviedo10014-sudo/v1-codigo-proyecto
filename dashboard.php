@@ -39,8 +39,8 @@ $registros = $pdo->query("
             <h1>📋 Dashboard</h1>
             <div class="user-info">
                 <span>👤 <?= htmlspecialchars($usuario['nombre_completo']) ?></span>
-                <span>🪪 <?= htmlspecialchars($usuario['carnet']) ?></span>
-                <span class="badge-<?= $usuario['rol'] ?>"><?= ucfirst($usuario['rol']) ?></span>
+                <span> <?= htmlspecialchars($_SESSION['carnet']) ?></span>
+                <span class="badge"><?= htmlspecialchars($_SESSION['rol']) ?></span>
                 <a href="logout.php" class="btn-logout">Cerrar sesión</a>
             </div>
         </div>

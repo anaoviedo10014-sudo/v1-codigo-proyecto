@@ -111,7 +111,7 @@ INSERT INTO modelo (nombre, id_marca) VALUES
 ('Galaxy Book', 6), ('ZenBook', 7), ('Tecra', 8), ('Vaio', 9), ('Gram', 10),
 ('Stealth', 11), ('Blade', 12), ('MateBook', 13), ('Mi Notebook', 14), ('Area-51m', 15);
 
-INSERT INTO tipo (nombre) VALUES ('Portátil'), ('Desktop'), ('All-in-One'), ('Tablet'), ('Otro');
+INSERT INTO tipo (nombre) VALUES ('Portatil'), ('Desktop'), ('All-in-One'), ('Tablet'), ('Otro');
 
 INSERT INTO portatil (serial, id_marca, id_modelo, estado) VALUES 
 ('PC-001', 1, 1, 'disponible'),

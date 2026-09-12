@@ -28,6 +28,8 @@ $usuarios = $pdo->query("
             <h1>👤 Gestionar Usuarios</h1>
             <div class="user-info">
                 <span>👤 <?= htmlspecialchars($_SESSION['nombre_completo']) ?></span>
+                <span> <?= htmlspecialchars($_SESSION['carnet']) ?></span>
+                <span class="badge"><?= htmlspecialchars($_SESSION['rol']) ?></span>
                 <a href="logout.php" class="btn-logout">Cerrar sesión</a>
             </div>
         </div>

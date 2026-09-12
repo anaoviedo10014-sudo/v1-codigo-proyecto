@@ -14,14 +14,13 @@ $pagina_actual = explode('?', $pagina_actual)[0];
 ?>
 
 <div class="nav-menu">
-    <!-- Páginas principales (siempre visibles) -->
     <a href="<?= $prefix ?>dashboard.php" class="<?= $pagina_actual == 'dashboard.php' ? 'active' : '' ?>">Inicio</a>
     <a href="<?= $prefix ?>registrar.php" class="<?= $pagina_actual == 'registrar.php' ? 'active' : '' ?>">Registrar</a>
     <a href="<?= $prefix ?>historial.php" class="<?= $pagina_actual == 'historial.php' ? 'active' : '' ?>">Historial</a>
     <a href="<?= $prefix ?>gestion_usuarios.php" class="<?= $pagina_actual == 'gestion_usuarios.php' ? 'active' : '' ?>">Usuarios</a>
     <a href="<?= $prefix ?>gestion_portatiles.php" class="<?= $pagina_actual == 'gestion_portatiles.php' ? 'active' : '' ?>">Computadores</a>
     
-    <!-- Opciones solo para administradores -->
+    
     <?php if ($rol_actual == 'admin' || $rol_actual == 'administrador'): ?>
         <a href="<?= $prefix ?>admin/usuario.php" class="<?= $pagina_actual == 'usuario.php' ? 'active' : '' ?>"> Admin Usuarios</a>
         <a href="<?= $prefix ?>admin/portatil.php" class="<?= $pagina_actual == 'portatil.php' ? 'active' : '' ?>"> Admin Portátiles</a>

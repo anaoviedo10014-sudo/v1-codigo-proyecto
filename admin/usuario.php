@@ -5,7 +5,7 @@ if (!isset($_SESSION['usuario_id']) || ($_SESSION['rol'] !== 'admin' && $_SESSIO
     exit;
 }
 require_once '../config/db.php';
-$titulo = 'Gestionar Usuarios (Admin)';
+$titulo = 'Gestionar Usuarios';
 
 $usuarios = $pdo->query("
     SELECT u.*, j.nombre as jornada_nombre 
@@ -19,38 +19,31 @@ $roles = $pdo->query("SELECT * FROM rol")->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <title><?= $titulo ?> - SENA</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body>
     <div class="dashboard-container">
         <div class="header">
             <h1>👤 <?= $titulo ?></h1>
             <div class="user-info">
                 <span>👤 <?= htmlspecialchars($_SESSION['nombre_completo']) ?></span>
+                <span> <?= htmlspecialchars($_SESSION['carnet']) ?></span>
+                <span class="badge"><?= htmlspecialchars($_SESSION['rol']) ?></span>
                 <a href="../logout.php" class="btn-logout">Cerrar sesión</a>
             </div>
         </div>
 
-        <div class="nav-menu">
-            <a href="../dashboard.php">Inicio</a>
-            <a href="../registrar.php">Registrar</a>
-            <a href="../historial.php">Historial</a>
-            <a href="usuario.php" class="active">Usuarios</a>
-            <a href="portatil.php">Portátiles</a>
-            <a href="marca.php">Marcas</a>
-            <a href="modelo.php">Modelos</a>
-            <a href="jornada.php">Jornadas</a>
-            <a href="rol.php">Roles</a>
-            <a href="tipo.php">Tipos</a>
-            <a href="registro.php">Registro Manual</a>
-        </div>
+        <?php include '../includes/menu.php'; ?>
 
         <?php if (isset($_SESSION['mensaje'])): ?>
             <div class="alert alert-<?= $_SESSION['tipo_mensaje'] ?>">
-                <?= $_SESSION['mensaje']; unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']); ?>
+                <?= $_SESSION['mensaje'];
+                unset($_SESSION['mensaje'], $_SESSION['tipo_mensaje']); ?>
             </div>
         <?php endif; ?>
 
@@ -119,4 +112,5 @@ $roles = $pdo->query("SELECT * FROM rol")->fetchAll();
         </table>
     </div>
 </body>
+
 </html>
