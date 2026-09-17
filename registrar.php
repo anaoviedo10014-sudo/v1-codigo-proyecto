@@ -44,12 +44,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if ($portatil['asignado_a'] != $usuario['id']) {
                         $mensaje = '🚨 ALERTA: El portátil NO está asignado a este usuario.';
                         $tipo_mensaje = 'error';
+                    } elseif ($tipo === 'salida' && $portatil['estado'] === 'fuera') {
+                        $mensaje = '⚠️ Este portátil ya está registrado como fuera del centro.';
+                        $tipo_mensaje = 'error';
+                    } elseif ($tipo === 'entrada' && $portatil['estado'] === 'dentro') {
+                    $mensaje = '⚠️ Este portátil ya está registrado como dentro del centro.';
+                    $tipo_mensaje = 'error';
                     } else {
                         $stmt = $pdo->prepare("
                             INSERT INTO registro_entrada_salida (id_usuario, id_portatil, tipo) 
                             VALUES (?, ?, ?)
                         ");
                         $stmt->execute([$usuario['id'], $portatil['id'], $tipo]);
+                        $nuevo_estado = ($tipo === 'salida') ? 'fuera' : 'dentro';
+                        $stmt2 = $pdo->prepare("UPDATE portatil SET estado = ? WHERE id = ?");
+                        $stmt2->execute([$nuevo_estado, $portatil['id']]);
                         $mensaje = "✅ Registro de $tipo exitoso para " . $usuario['nombre_completo'];
                         $tipo_mensaje = 'success';
                     }
