@@ -13,7 +13,7 @@ $usuario = $stmt->fetch();
 $totalUsuarios = $pdo->query("SELECT COUNT(*) FROM usuario")->fetchColumn();
 $totalPortatiles = $pdo->query("SELECT COUNT(*) FROM portatil")->fetchColumn();
 $totalRegistros = $pdo->query("SELECT COUNT(*) FROM registro_entrada_salida")->fetchColumn();
-$totalDisponibles = $pdo->query("SELECT COUNT(*) FROM portatil WHERE estado = 'disponible'")->fetchColumn();
+$totalDisponibles = $pdo->query("SELECT COUNT(*) FROM portatil WHERE estado = 'dentro'")->fetchColumn();
 
 $registros = $pdo->query("
     SELECT r.*, u.nombre_completo, u.rol, p.serial, m.nombre as marca
@@ -65,7 +65,7 @@ $registros = $pdo->query("
             </div>
             <div class="card" style="text-align:center;">
                 <h2><?= $totalDisponibles ?></h2>
-                <p>Disponibles</p>
+                <p>Dentro del centro</p>
             </div>
         </div>
 
