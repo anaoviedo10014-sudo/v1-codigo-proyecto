@@ -52,8 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $tipo_mensaje = 'error';
                     } else {
                         $stmt = $pdo->prepare("
-                            INSERT INTO registro_entrada_salida (id_usuario, id_portatil, tipo) 
-                            VALUES (?, ?, ?)
+                        INSERT INTO registro_entrada_salida (id_usuario, id_portatil, tipo, fecha_hora) 
+                        VALUES (?, ?, ?, NOW())
                         ");
                         $stmt->execute([$usuario['id'], $portatil['id'], $tipo]);
                         $nuevo_estado = ($tipo === 'salida') ? 'fuera' : 'dentro';
