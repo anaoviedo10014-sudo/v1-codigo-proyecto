@@ -59,6 +59,7 @@ $marcas = $pdo->query("SELECT * FROM marca ORDER BY nombre")->fetchAll();
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
+                    <th>Acción</th>
                 </tr>
             </thead>
             <tbody>
@@ -66,6 +67,11 @@ $marcas = $pdo->query("SELECT * FROM marca ORDER BY nombre")->fetchAll();
                     <tr>
                         <td><?= $m['id'] ?></td>
                         <td><?= htmlspecialchars($m['nombre']) ?></td>
+                        <td>
+                            <a href="eliminar.php?tabla=marca&id=<?= $m['id'] ?>"
+                                onclick="return confirm('¿Seguro que quieres eliminar esta marca?');"
+                                class="btn-danger btn-sm">Eliminar</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

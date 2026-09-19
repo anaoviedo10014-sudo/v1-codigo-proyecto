@@ -109,6 +109,7 @@ $usuarios = $pdo->query("SELECT id, carnet, nombre_completo FROM usuario WHERE r
                     <th>Modelo</th>
                     <th>Asignado a</th>
                     <th>Estado</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
@@ -120,6 +121,11 @@ $usuarios = $pdo->query("SELECT id, carnet, nombre_completo FROM usuario WHERE r
                         <td><?= htmlspecialchars($p['modelo']) ?></td>
                         <td><?= $p['asignado_nombre'] ? htmlspecialchars($p['asignado_nombre']) : 'Sin asignar' ?></td>
                         <td><?= ucfirst(str_replace('_', ' ', $p['estado'])) ?></td>
+                        <td>
+                            <a href="eliminar.php?tabla=portatil&id=<?= $p['id'] ?>"
+                                onclick="return confirm('¿Seguro que quieres eliminar este portátil?');"
+                                class="btn-danger btn-sm">Eliminar</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

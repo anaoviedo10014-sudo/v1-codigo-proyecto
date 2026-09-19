@@ -96,6 +96,7 @@ $roles = $pdo->query("SELECT * FROM rol")->fetchAll();
                     <th>Nombre</th>
                     <th>Rol</th>
                     <th>Jornada</th>
+                    <th>Acción</th>
                 </tr>
             </thead>
             <tbody>
@@ -106,6 +107,11 @@ $roles = $pdo->query("SELECT * FROM rol")->fetchAll();
                         <td><?= htmlspecialchars($u['nombre_completo']) ?></td>
                         <td><?= htmlspecialchars($u['rol']) ?></td>
                         <td><?= $u['jornada_nombre'] ?? 'Sin asignar' ?></td>
+                        <td>
+                            <a href="eliminar.php?tabla=usuario&id=<?= $u['id'] ?>"
+                                onclick="return confirm('¿Seguro que quieres eliminar este usuario?');"
+                                class="btn-danger btn-sm">Eliminar</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

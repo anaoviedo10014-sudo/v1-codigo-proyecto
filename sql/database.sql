@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS control_computadores_sena;
-CREATE DATABASE control_computadores_sena;
-USE control_computadores_sena;
+DROP DATABASE IF EXISTS sena_computadores_v2;
+CREATE DATABASE sena_computadores_v2;
+USE sena_computadores_v2;
 
 CREATE TABLE rol (
     id int(11) NOT NULL AUTO_INCREMENT,
@@ -58,7 +58,7 @@ CREATE TABLE portatil (
     id_marca int(11) NOT NULL,
     id_modelo int(11) NOT NULL,
     asignado_a int(11) DEFAULT NULL,
-    estado enum('disponible','asignado','en_reparacion') DEFAULT 'disponible',
+    estado enum('dentro','fuera') DEFAULT 'dentro',
     tipo_equipo varchar(50) DEFAULT 'portatil',
     otro_tipo varchar(100) DEFAULT NULL,
     PRIMARY KEY (id),
@@ -114,8 +114,8 @@ INSERT INTO modelo (nombre, id_marca) VALUES
 INSERT INTO tipo (nombre) VALUES ('Portatil'), ('Desktop'), ('All-in-One'), ('Tablet'), ('Otro');
 
 INSERT INTO portatil (serial, id_marca, id_modelo, estado) VALUES 
-('PC-001', 1, 1, 'disponible'),
-('PC-002', 2, 2, 'disponible'),
-('PC-003', 3, 3, 'disponible'),
-('PC-004', 4, 4, 'disponible'),
-('PC-005', 5, 5, 'disponible');
+('PC-001', 1, 1, 'adentro'),
+('PC-002', 2, 2, 'adentro'),
+('PC-003', 3, 3, 'adentro'),
+('PC-004', 4, 4, 'adentro'),
+('PC-005', 5, 5, 'adentro');

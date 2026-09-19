@@ -59,6 +59,7 @@ $jornadas = $pdo->query("SELECT * FROM jornada ORDER BY id")->fetchAll();
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
@@ -66,6 +67,11 @@ $jornadas = $pdo->query("SELECT * FROM jornada ORDER BY id")->fetchAll();
                     <tr>
                         <td><?= $j['id'] ?></td>
                         <td><?= htmlspecialchars($j['nombre']) ?></td>
+                        <td>
+                            <a href="eliminar.php?tabla=jornada&id=<?= $j['id'] ?>"
+                                onclick="return confirm('¿Seguro que quieres eliminar esta jornada?');"
+                                class="btn-danger btn-sm">Eliminar</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

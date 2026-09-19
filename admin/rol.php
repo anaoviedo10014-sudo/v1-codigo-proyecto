@@ -59,6 +59,7 @@ $roles = $pdo->query("SELECT * FROM rol ORDER BY id")->fetchAll();
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
@@ -66,6 +67,11 @@ $roles = $pdo->query("SELECT * FROM rol ORDER BY id")->fetchAll();
                     <tr>
                         <td><?= $r['id'] ?></td>
                         <td><?= htmlspecialchars($r['nombre']) ?></td>
+                        <td>
+                            <a href="eliminar.php?tabla=rol&id=<?= $r['id'] ?>"
+                                onclick="return confirm('¿Seguro que quieres eliminar este rol?');"
+                                class="btn-danger btn-sm">Eliminar</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

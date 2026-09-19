@@ -59,6 +59,7 @@ $tipos = $pdo->query("SELECT * FROM tipo ORDER BY id")->fetchAll();
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
+                    <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
@@ -66,6 +67,11 @@ $tipos = $pdo->query("SELECT * FROM tipo ORDER BY id")->fetchAll();
                     <tr>
                         <td><?= $t['id'] ?></td>
                         <td><?= htmlspecialchars($t['nombre']) ?></td>
+                        <td>
+                            <a href="eliminar.php?tabla=tipo&id=<?= $t['id'] ?>"
+                                onclick="return confirm('¿Seguro que quieres eliminar este tipo?');"
+                                class="btn-danger btn-sm">Eliminar</a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
