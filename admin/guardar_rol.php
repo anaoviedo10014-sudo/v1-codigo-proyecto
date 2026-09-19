@@ -16,7 +16,11 @@ if ($nombre) {
         $_SESSION['mensaje'] = '✅ Rol guardado correctamente';
         $_SESSION['tipo_mensaje'] = 'success';
     } catch (PDOException $e) {
-        $_SESSION['mensaje'] = '❌ Error: ' . $e->getMessage();
+        if ($e->getCode() == 23000) {
+            $_SESSION['mensaje'] = '❌ Ya existe un rol registrado con ese nombre.';
+        } else {
+            $_SESSION['mensaje'] = '❌ Ocurrió un error al guardar el rol. Intenta de nuevo.';
+        }
         $_SESSION['tipo_mensaje'] = 'error';
     }
 } else {
@@ -26,4 +30,3 @@ if ($nombre) {
 
 header('Location: rol.php');
 exit;
-?>

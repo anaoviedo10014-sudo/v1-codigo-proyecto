@@ -15,8 +15,12 @@ if ($nombre && $id_marca) {
         $stmt->execute([$nombre, $id_marca]);
         $_SESSION['mensaje'] = '✅ Modelo guardado correctamente';
         $_SESSION['tipo_mensaje'] = 'success';
-    } catch (PDOException $e) {
-        $_SESSION['mensaje'] = '❌ Error: ' . $e->getMessage();
+} catch (PDOException $e) {
+        if ($e->getCode() == 23000) {
+            $_SESSION['mensaje'] = '❌ Ya existe un modelo registrado con ese nombre.';
+        } else {
+            $_SESSION['mensaje'] = '❌ Ocurrió un error al guardar el modelo. Intenta de nuevo.';
+        }
         $_SESSION['tipo_mensaje'] = 'error';
     }
 } else {

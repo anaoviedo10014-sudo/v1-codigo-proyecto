@@ -14,8 +14,12 @@ if ($nombre) {
         $stmt->execute([$nombre]);
         $_SESSION['mensaje'] = '✅ Marca guardada correctamente';
         $_SESSION['tipo_mensaje'] = 'success';
-    } catch (PDOException $e) {
-        $_SESSION['mensaje'] = '❌ Error: ' . $e->getMessage();
+} catch (PDOException $e) {
+        if ($e->getCode() == 23000) {
+            $_SESSION['mensaje'] = '❌ Ya existe una marca registrada con ese nombre.';
+        } else {
+            $_SESSION['mensaje'] = '❌ Ocurrió un error al guardar la marca. Intenta de nuevo.';
+        }
         $_SESSION['tipo_mensaje'] = 'error';
     }
 } else {

@@ -19,7 +19,11 @@ if ($serial && $id_marca && $id_modelo) {
         $_SESSION['mensaje'] = '✅ Portátil guardado correctamente';
         $_SESSION['tipo_mensaje'] = 'success';
     } catch (PDOException $e) {
-        $_SESSION['mensaje'] = '❌ Error: ' . $e->getMessage();
+        if ($e->getCode() == 23000) {
+            $_SESSION['mensaje'] = '❌ Ya existe un portátil registrado con ese serial.';
+        } else {
+            $_SESSION['mensaje'] = '❌ Ocurrió un error al guardar el portátil. Intenta de nuevo.';
+        }
         $_SESSION['tipo_mensaje'] = 'error';
     }
 } else {
@@ -29,4 +33,3 @@ if ($serial && $id_marca && $id_modelo) {
 
 header('Location: portatil.php');
 exit;
-?>

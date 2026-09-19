@@ -31,7 +31,11 @@ if ($carnet && $nombre && $apellido && $id_jornada && $id_rol) {
         $_SESSION['mensaje'] = '✅ Usuario guardado correctamente';
         $_SESSION['tipo_mensaje'] = 'success';
     } catch (PDOException $e) {
-        $_SESSION['mensaje'] = '❌ Error: ' . $e->getMessage();
+        if ($e->getCode() == 23000) {
+            $_SESSION['mensaje'] = '❌ Ya existe un usuario registrado con ese carnet.';
+        } else {
+            $_SESSION['mensaje'] = '❌ Ocurrió un error al guardar el usuario. Intenta de nuevo.';
+        }
         $_SESSION['tipo_mensaje'] = 'error';
     }
 } else {
