@@ -10,12 +10,25 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $carnet = $_POST['carnet'] ?? '';
     $contrasena = $_POST['contrasena'] ?? '';
-    
-    $stmt = $pdo->prepare("SELECT * FROM usuario WHERE carnet = ? AND contrasena = MD5(?)");
-    $stmt->execute([$carnet, $contrasena]);
+
+    $stmt = $pdo->prepare("SELECT * FROM usuario WHERE carnet = ?");
+    $stmt->execute([$carnet]);
     $user = $stmt->fetch();
-    
+
+    $loginOk = false;
+
     if ($user) {
+        if (password_verify($contrasena, $user['contrasena'])) {
+            $loginOk = true;
+        } elseif ($user['contrasena'] === md5($contrasena)) {
+            $loginOk = true;
+            $nuevoHash = password_hash($contrasena, PASSWORD_DEFAULT);
+            $update = $pdo->prepare("UPDATE usuario SET contrasena = ? WHERE id = ?");
+            $update->execute([$nuevoHash, $user['id']]);
+        }
+    }
+
+    if ($loginOk) {
         $_SESSION['usuario_id'] = $user['id'];
         $_SESSION['nombre_completo'] = $user['nombre_completo'];
         $_SESSION['rol'] = $user['rol'];
@@ -29,12 +42,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Control Computadores SENA</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="login-container">
         <div class="login-box">
@@ -53,11 +68,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label>🔒 Contraseña</label>
                     <input type="password" name="contrasena" placeholder="Ingresa tu contraseña" required>
                 </div>
-                
+
                 <button type="submit" class="btn-primary">Ingresar</button>
             </form>
 
         </div>
     </div>
 </body>
+
 </html>

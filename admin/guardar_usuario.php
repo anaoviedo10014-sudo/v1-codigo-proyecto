@@ -22,12 +22,13 @@ if ($carnet && $nombre && $apellido && $id_jornada && $id_rol) {
         $stmt->execute([$id_rol]);
         $rol_data = $stmt->fetch();
         $rol_nombre = $rol_data ? strtolower($rol_data['nombre']) : 'aprendiz';
-        
+
+        $hashContrasena = password_hash($contrasena, PASSWORD_DEFAULT);
         $stmt = $pdo->prepare("
-            INSERT INTO usuario (carnet, nombre_completo, contrasena, rol, id_jornada) 
-            VALUES (?, ?, MD5(?), ?, ?)
+        INSERT INTO usuario (carnet, nombre_completo, contrasena, rol, id_jornada) 
+        VALUES (?, ?, ?, ?, ?)
         ");
-        $stmt->execute([$carnet, $nombre_completo, $contrasena, $rol_nombre, $id_jornada]);
+        $stmt->execute([$carnet, $nombre_completo, $hashContrasena, $rol_nombre, $id_jornada]);
         $_SESSION['mensaje'] = '✅ Usuario guardado correctamente';
         $_SESSION['tipo_mensaje'] = 'success';
     } catch (PDOException $e) {
@@ -45,4 +46,3 @@ if ($carnet && $nombre && $apellido && $id_jornada && $id_rol) {
 
 header('Location: usuario.php');
 exit;
-?>
