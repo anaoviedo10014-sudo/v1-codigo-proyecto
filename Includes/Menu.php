@@ -30,5 +30,6 @@ $pagina_actual = explode('?', $pagina_actual)[0];
         <a href="<?= $prefix ?>admin/rol.php" class="<?= $pagina_actual == 'rol.php' ? 'active' : '' ?>"> Roles</a>
         <a href="<?= $prefix ?>admin/tipo.php" class="<?= $pagina_actual == 'tipo.php' ? 'active' : '' ?>"> Tipos</a>
         <a href="<?= $prefix ?>admin/registro.php" class="<?= $pagina_actual == 'registro.php' ? 'active' : '' ?>"> Registro Manual</a>
+        <a href="<?= $prefix ?>admin/reportes.php" class="<?= $pagina_actual == 'reportes.php' ? 'active' : '' ?>"> Reportes</a>
     <?php endif; ?>
 </div>
