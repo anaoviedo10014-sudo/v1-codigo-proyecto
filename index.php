@@ -9,11 +9,12 @@ require_once 'config/db.php';
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $carnet = $_POST['carnet'] ?? '';
-    $contrasena = $_POST['contrasena'] ?? '';
+    $contrasena = trim($_POST['contrasena'] ?? '');
 
     $stmt = $pdo->prepare("SELECT * FROM usuario WHERE carnet = ?");
     $stmt->execute([$carnet]);
     $user = $stmt->fetch();
+    
 
     $loginOk = false;
 

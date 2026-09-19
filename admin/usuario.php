@@ -108,6 +108,9 @@ $roles = $pdo->query("SELECT * FROM rol")->fetchAll();
                         <td><?= htmlspecialchars($u['rol']) ?></td>
                         <td><?= $u['jornada_nombre'] ?? 'Sin asignar' ?></td>
                         <td>
+                            <a href="reseteo_contrasena.php?id=<?= $u['id'] ?>"
+                                onclick="return confirm('¿Generar una nueva contraseña temporal para este usuario?');"
+                                class="btn-primary btn-sm">Resetear clave</a>
                             <a href="eliminar.php?tabla=usuario&id=<?= $u['id'] ?>"
                                 onclick="return confirm('¿Seguro que quieres eliminar este usuario?');"
                                 class="btn-danger btn-sm">Eliminar</a>
