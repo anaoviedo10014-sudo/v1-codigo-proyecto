@@ -10,8 +10,7 @@ $serial = trim($_POST['serial'] ?? '');
 $id_marca = $_POST['id_marca'] ?? '';
 $id_modelo = $_POST['id_modelo'] ?? '';
 $asignado_a = $_POST['asignado_a'] ?: null;
-$estado = $_POST['estado'] ?? 'disponible';
-
+$estado = 'dentro'; 
 if ($serial && $id_marca && $id_modelo) {
     try {
         $stmt = $pdo->prepare("INSERT INTO portatil (serial, id_marca, id_modelo, asignado_a, estado) VALUES (?, ?, ?, ?, ?)");

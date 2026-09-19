@@ -60,7 +60,7 @@ $usuarios = $pdo->query("SELECT id, carnet, nombre_completo FROM usuario WHERE r
                     </div>
                     <div class="form-group">
                         <label>Marca</label>
-                        <select name="id_marca" required>
+                        <select name="id_marca" id="select-marca" required>
                             <option value="">Seleccionar...</option>
                             <?php foreach ($marcas as $m): ?>
                                 <option value="<?= $m['id'] ?>"><?= htmlspecialchars($m['nombre']) ?></option>
@@ -69,10 +69,12 @@ $usuarios = $pdo->query("SELECT id, carnet, nombre_completo FROM usuario WHERE r
                     </div>
                     <div class="form-group">
                         <label>Modelo</label>
-                        <select name="id_modelo" required>
-                            <option value="">Seleccionar...</option>
+                        <select name="id_modelo" id="select-modelo" required>
+                            <option value="">Selecciona una marca primero</option>
                             <?php foreach ($modelos as $mo): ?>
-                                <option value="<?= $mo['id'] ?>"><?= htmlspecialchars($mo['nombre']) ?></option>
+                                <option value="<?= $mo['id'] ?>" data-marca="<?= $mo['id_marca'] ?>">
+                                    <?= htmlspecialchars($mo['nombre']) ?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -85,19 +87,28 @@ $usuarios = $pdo->query("SELECT id, carnet, nombre_completo FROM usuario WHERE r
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Estado</label>
-                        <select name="estado" required>
-                            <option value="disponible">Disponible</option>
-                            <option value="asignado">Asignado</option>
-                            <option value="en_reparacion">En reparación</option>
-                        </select>
-                    </div>
                     <div class="form-group" style="flex: 0 0 auto;">
                         <button type="submit" class="btn-success">Guardar</button>
                     </div>
                 </div>
             </form>
+
+            <script>
+                const modeloOptions = Array.from(document.querySelectorAll('#select-modelo option[data-marca]'));
+                const selectMarca = document.getElementById('select-marca');
+                const selectModelo = document.getElementById('select-modelo');
+
+                function filtrarModelos() {
+                    const marcaSeleccionada = selectMarca.value;
+                    selectModelo.innerHTML = '<option value="">Seleccionar...</option>';
+
+                    modeloOptions
+                        .filter(opt => opt.dataset.marca === marcaSeleccionada)
+                        .forEach(opt => selectModelo.appendChild(opt.cloneNode(true)));
+                }
+
+                selectMarca.addEventListener('change', filtrarModelos);
+            </script>
         </div>
 
         <table>
